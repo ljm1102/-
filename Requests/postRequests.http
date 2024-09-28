@@ -1,0 +1,50 @@
+//게시글 목록 조회 API
+GET http://localhost:3000/api/groups/66f7d7186b24b798d56866da/posts
+
+###
+
+//게시글 등록 API
+POST http://localhost:3000/api/groups/66f7d7186b24b798d56866da/posts
+Content-Type: application/json
+
+{
+    "nickname": "JaneSmith",
+    "title": "A Day at the Beach",
+    "content": "The beach was beautiful, and I enjoyed the sun and sand with my friends!",
+    "postPassword": "beachDay2024",
+    "imageUrl": "https://example.com/beach.jpg",
+    "tags": ["beach", "vacation", "friends"],
+    "location": "Sunny Beach",
+    "moment": "2024-07-15",
+    "isPublic": true
+}
+
+###
+
+//게시글 수정 API
+
+PUT http://localhost:3000/api/posts/66f7e8378a7cbdd30eb6f5c6
+Content-Type: application/json
+
+{
+    "nickname": "JohnDoe",
+    "title": "An Amazing Concert Experience",
+    "content": "The concert was unforgettable!",
+    "postPassword": "myPostPassword123",
+    "imageUrl": "https://example.com/concert-amazing.jpg",
+    "tags": ["concert", "music", "experience"],
+    "location": "City Arena",
+    "moment": "2024-03-10",
+    "isPublic": false
+}
+
+###
+
+//게시글 삭제 API
+
+DELETE http://localhost:3000/api/posts/66f7e8378a7cbdd30eb6f5c6
+Content-Type: application/json
+
+{
+    "postPassword": "myPostPassword123"
+}
