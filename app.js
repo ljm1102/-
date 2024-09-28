@@ -37,18 +37,38 @@ app.post('/api/groups', asyncHandler(async (req, res) => {
 // 그룹 목록 조회 API
 app.get('/api/groups', asyncHandler(async (req, res) => {
     const { page = 1, pageSize = 10, sortBy = 'latest', keyword = '', isPublic } = req.query;
+
+    // 정렬 옵션 설정
     const sortOption = sortBy === 'mostPosted' ? { postCount: -1 } :
                        sortBy === 'mostLiked' ? { likeCount: -1 } :
                        sortBy === 'mostBadge' ? { badges: -1 } :
-                       { createdAt: -1 }; // Default: latest
-    
+                       { createdAt: -1 }; // Default: 최신순
+
+    // 검색 조건 설정
     const query = keyword ? { name: new RegExp(keyword, 'i') } : {};
     if (isPublic !== undefined) query.isPublic = isPublic === 'true';
-    
+
+    // 페이징 처리
     const skip = (page - 1) * pageSize;
-    const groups = await Group.find(query).sort(sortOption).skip(skip).limit(Number(pageSize));
+    
+    // 그룹 조회 (비밀번호 제외, 배지 목록 대신 배지 수로 변환)
+    const groups = await Group.find(query)
+        .sort(sortOption)
+        .skip(skip)
+        .limit(Number(pageSize))
+        .select('-password') // 비밀번호 제외
+        .lean() // 리턴된 문서를 평범한 JS 객체로 변환 (수정 가능하게)
+
+    // 각 그룹에 배지 수 추가
+    groups.forEach(group => {
+        group.badgeCount = group.badges.length; // 배지 목록 대신 배지 수
+        delete group.badges; // 배지 목록 삭제
+    });
+
+    // 총 문서 수 계산
     const totalItemCount = await Group.countDocuments(query);
 
+    // 응답
     res.send({
         currentPage: Number(page),
         totalPages: Math.ceil(totalItemCount / pageSize),
@@ -58,15 +78,39 @@ app.get('/api/groups', asyncHandler(async (req, res) => {
 }));
 
 // 그룹 상세 조회 API
-app.get('/api/groups/:id', asyncHandler(async (req, res) => {
-    const id = req.params.id;
-    const group = await Group.findById(id);
-    if (group) {
-        res.send(group);
-    } else {
-        res.status(404).send({ message: 'Cannot find given id.' });
+app.post('/api/groups/:id', asyncHandler(async (req, res) => {
+    const groupId = req.params.id;
+    const { password } = req.body; // 비밀번호를 요청 본문에서 받음
+
+    const group = await Group.findById(groupId);
+
+    if (!group) {
+        return res.status(404).send({ message: '존재하지 않는 그룹입니다' });
     }
+
+    if (!group.isPublic) {
+        // 비공개 그룹일 경우 비밀번호 확인
+        if (!password || password !== group.password) {
+            return res.status(403).send({ message: '비밀번호가 일치하지 않습니다' });
+        }
+    }
+
+    // 비밀번호는 응답에서 제외하고 그룹 정보 전송
+    const groupDetails = {
+        id: group._id,
+        name: group.name,
+        imageUrl: group.imageUrl,
+        isPublic: group.isPublic,
+        likeCount: group.likeCount,
+        badges: group.badges,
+        postCount: group.postCount,
+        createdAt: group.createdAt,
+        introduction: group.introduction
+    };
+
+    res.status(200).send(groupDetails);
 }));
+
 
 // 그룹 수정 API
 app.put('/api/groups/:id', asyncHandler(async (req, res) => {
