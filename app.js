@@ -171,4 +171,26 @@ app.get('/api/groups/:id/is-public', asyncHandler(async (req, res) => {
     }
 }));
 
+// 그룹 조회 권한 확인 API
+app.post('/api/groups/:groupId/verify-password', asyncHandler(async (req, res) => {
+    const { groupId } = req.params;
+    const { password } = req.body;
+
+    // 그룹 찾기
+    const group = await Group.findById(groupId);
+
+    // 그룹이 존재하지 않을 경우 404 응답
+    if (!group) {
+        return res.status(404).send({ message: '그룹이 존재하지 않습니다' });
+    }
+
+    // 비밀번호 비교
+    if (group.password === password) {
+        res.status(200).send({ message: '비밀번호가 확인되었습니다' });
+    } else {
+        res.status(401).send({ message: '비밀번호가 틀렸습니다' });
+    }
+}));
+
+
 app.listen(process.env.PORT || 3000, () => console.log('Server Started'));
