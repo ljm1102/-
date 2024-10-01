@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 
 // 그룹 스키마 및 모델 정의
 const groupSchema = new mongoose.Schema({

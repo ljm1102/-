@@ -2,7 +2,7 @@ import express from 'express';
 import Post from '../models/Post.js';
 import Group from '../models/Group.js';
 import Comment from '../models/Comment.js';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import moment from 'moment';
 
 const router = express.Router();

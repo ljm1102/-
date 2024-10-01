@@ -1,7 +1,7 @@
 import express from 'express';
 import Comment from '../models/Comment.js';
 import Post from '../models/Post.js';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 const router = express.Router();
 
