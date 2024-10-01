@@ -1,7 +1,6 @@
 import express from 'express';
 import Group from '../models/Group.js';
 import Post from '../models/Post.js';
-import moment from 'moment';
 import bcrypt from 'bcrypt';
 
 const router = express.Router();
