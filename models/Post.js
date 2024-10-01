@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
 
 const postSchema = new mongoose.Schema({
     groupId: {
@@ -30,6 +31,10 @@ const postSchema = new mongoose.Schema({
         type: [String],
         default: [],
     },
+    postlikeCount: {
+        type: Number,
+        default: 0,  // 초기값은 0
+    },
     location: {
         type: String,
     },
@@ -41,6 +46,18 @@ const postSchema = new mongoose.Schema({
         type: Boolean,
         default: true,
     },
+    commentCount: {
+        type: Number,
+        default: 0,
+    }
+});
+
+// 비밀번호 저장 전 해시 처리
+postSchema.pre('save', async function(next) {
+    if (this.isModified('postPassword')) {
+        this.postPassword = await bcrypt.hash(this.postPassword, 10);
+    }
+    next();
 });
 
 const Post = mongoose.model('Post', postSchema);
