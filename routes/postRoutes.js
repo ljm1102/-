@@ -7,7 +7,7 @@ import moment from 'moment';
 
 const router = express.Router();
 
-// 에러 처리 핸들러 s
+// 에러 처리 핸들러
 function asyncHandler(handler) {
     return async function (req, res) {
         try {
