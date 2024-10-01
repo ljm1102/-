@@ -7,7 +7,7 @@ import moment from 'moment';
 
 const router = express.Router();
 
-// 에러 처리 핸들러
+// 에러 처리 핸들러 s
 function asyncHandler(handler) {
     return async function (req, res) {
         try {
@@ -31,6 +31,7 @@ async function checkAndAwardBadges(groupId) {
         return; // 그룹이 존재하지 않으면 배지 체크를 중단
     }
 
+    // 1. 7일 연속 게시글 등록
     const posts = await Post.find({
         groupId: groupId,
     }).sort({ moment: 1 }); // 게시글들을 날짜 순으로 정렬

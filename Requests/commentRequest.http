@@ -1,0 +1,42 @@
+//댓글 등록 API
+
+POST http://localhost:3000/api/posts/66f972b2bdb98b96d087d2f4/comments
+Content-Type: application/json
+
+{
+	"nickname": "example12345",
+	"content": "example1234567",
+	"commentPassword": "example123"
+}
+
+###
+
+//댓글 목록 조회 API
+
+GET http://localhost:3000/api/posts/66f972b2bdb98b96d087d2f4/comments
+
+
+###
+
+//댓글 수정 API
+
+PUT http://localhost:3000/api/comments/66f972efbdb98b96d087d309
+Content-Type: application/json
+
+{
+    "nickname": "tory2174-2",
+    "content": "modify-2",
+    "commentPassword": "example123"
+}
+
+
+###
+
+//댓글 삭제 API
+
+DELETE http://localhost:3000/api/comments/66f927e504bfe01f6fc35576
+Content-Type: application/json
+
+{
+    "commentPassword": "example123"
+}
