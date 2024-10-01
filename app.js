@@ -12,6 +12,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+//DB 연결
 mongoose.connect(process.env.DATABASE_URL).then(() => console.log('Connected to DB'));
 
 // 라우터 설정
