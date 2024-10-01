@@ -1,9 +1,11 @@
 import mongoose from "mongoose";
 import data from './mock.js';
-import Group from "../models/group.js";
-import { DATABASE_URL } from "../env.js";
+import Group from "../models/Group.js";
+import * as dotenv from 'dotenv';
 
-mongoose.connect(DATABASE_URL);
+dotenv.config();
+
+mongoose.connect(process.env.DATABASE_URL);
 
 await Group.deleteMany({});
 await Group.insertMany(data);
