@@ -1,6 +1,6 @@
 //댓글 등록 API
 
-POST http://localhost:3000/api/posts/66f972b2bdb98b96d087d2f4/comments
+POST http://localhost:3000/api/posts/66fc04afe135e31823b03393/comments
 Content-Type: application/json
 
 {
@@ -13,7 +13,7 @@ Content-Type: application/json
 
 //댓글 목록 조회 API
 
-GET http://localhost:3000/api/posts/66f972b2bdb98b96d087d2f4/comments
+GET http://localhost:3000/api/posts/66fc04f3e135e31823b033c3/comments
 
 
 ###

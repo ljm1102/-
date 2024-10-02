@@ -1,0 +1,6 @@
+POST http://localhost:3000/api/image
+Content-Type: multipart/form-data
+
+{
+    "image": "/uploads/test1.png"
+}

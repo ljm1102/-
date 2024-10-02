@@ -38,7 +38,7 @@ Content-Type: application/json
 ###
 
 //그룹 삭제 API
-DELETE http://localhost:3000/api/groups/66f97184bdb98b96d087d2b7
+DELETE http://localhost:3000/api/groups/66f97245bdb98b96d087d2d2
 Content-Type: application/json
 
 {
