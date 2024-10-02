@@ -63,7 +63,7 @@ postSchema.pre('save', async function(next) {
 
 // 게시글이 삭제되기 전에 해당 게시글에 속한 모든 댓글 삭제
 postSchema.pre('findByIdAndDelete', async function(next) {
-    const postId = this.getQuery()._id;
+    const postId = this.getQuery().id;
     await Comment.deleteMany({ postId });
     next();
   });
