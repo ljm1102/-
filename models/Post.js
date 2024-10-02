@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
+import Comment from './Comment.js';
 
 const postSchema = new mongoose.Schema({
     groupId: {
@@ -59,6 +60,13 @@ postSchema.pre('save', async function(next) {
     }
     next();
 });
+
+// 게시글이 삭제되기 전에 해당 게시글에 속한 모든 댓글 삭제
+postSchema.pre('findByIdAndDelete', async function(next) {
+    const postId = this.getQuery()._id;
+    await Comment.deleteMany({ postId });
+    next();
+  });
 
 const Post = mongoose.model('Post', postSchema);
 export default Post;

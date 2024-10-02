@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
+import Post from './Post.js';
 
 // 그룹 스키마 및 모델 정의
 const groupSchema = new mongoose.Schema({
@@ -29,6 +30,13 @@ groupSchema.pre('save', async function(next) {
     }
     next();
 });
+
+//그룹이 삭제되기 전에 해당 그룹 내의 모든 게시글들 삭제
+groupSchema.pre('findByIdAndDelete', async function(next) {
+    const groupId = this.getQuery()._id;
+    await Post.deleteMany({ groupId });
+    next();
+  });
 
 const Group = mongoose.model('Group', groupSchema);
 
