@@ -70,7 +70,7 @@ router.post('/image', upload.single('image'), asyncHandler((req, res) => {
     });
 }));
 
-// 정적 파일 제공 (업로드된 이미지 접근 가능하도록 설정)
+// /api/uploads 정적 파일 제공 (업로드된 이미지 접근 가능하도록 설정)
 router.use('/uploads', express.static('uploads'));
 
 export default router;

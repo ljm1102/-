@@ -11,7 +11,7 @@ Content-Type: application/json
 {
     "name": "example5",
     "password": "123456",
-    "imageUrl": "https://example.com/example.jpg",
+    "imageUrl": "http://localhost:3000/uploads/tes1.png",
     "isPublic": false,
     "introduction": "example api.",
     "badges": []
@@ -38,7 +38,7 @@ Content-Type: application/json
 ###
 
 //그룹 삭제 API
-DELETE http://localhost:3000/api/groups/66f97245bdb98b96d087d2d2
+DELETE http://localhost:3000/api/groups/66fe6a3c93c7427ed7328c47
 Content-Type: application/json
 
 {

@@ -194,7 +194,7 @@ router.delete('/posts/:postId', asyncHandler(async (req, res) => {
     }
 
     // 게시글 삭제
-    await Post.findByIdAndDelete(postId);
+    await Post.findOneAndDelete({ _id: postId }); // findOneAndDelete로 삭제
     res.status(200).send({ message: '게시글 삭제 성공' });
 }));
 

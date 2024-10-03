@@ -199,7 +199,7 @@ router.delete('/:id', asyncHandler(async (req, res) => {
         // 비밀번호 확인
         const isMatch = await bcrypt.compare(password, group.password);
         if (isMatch) {
-            await Group.findByIdAndDelete(id);
+            await Group.findOneAndDelete({ _id: id }); // findOneAndDelete로 삭제
             res.send({ message: '그룹 삭제 성공' });
         } else {
             res.status(403).send({ message: '비밀번호가 틀렸습니다' });

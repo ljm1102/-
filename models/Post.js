@@ -62,11 +62,20 @@ postSchema.pre('save', async function(next) {
 });
 
 // 게시글이 삭제되기 전에 해당 게시글에 속한 모든 댓글 삭제
-postSchema.pre('findByIdAndDelete', async function(next) {
-    const postId = this.getQuery().id;
-    await Comment.deleteMany({ postId });
-    next();
-  });
+postSchema.pre('findOneAndDelete', async function(next) {
+    try {
+        const postId = this.getQuery()._id; // 삭제하려는 게시글의 ID를 가져옴
+
+        // 댓글 삭제 (해당 게시글에 달린 모든 댓글 삭제)
+        await Comment.deleteMany({ postId });
+
+        next(); // 다음 미들웨어로 넘어가기
+    } catch (error) {
+        next(error); // 에러 발생 시 처리
+    }
+});
+
+
 
 const Post = mongoose.model('Post', postSchema);
 export default Post;

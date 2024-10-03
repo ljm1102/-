@@ -32,11 +32,18 @@ groupSchema.pre('save', async function(next) {
 });
 
 //그룹이 삭제되기 전에 해당 그룹 내의 모든 게시글들 삭제
-groupSchema.pre('findByIdAndDelete', async function(next) {
-    const groupId = this.getQuery()._id;
-    await Post.deleteMany({ groupId });
-    next();
-  });
+groupSchema.pre('findOneAndDelete', async function(next) {
+    try {
+        const groupId = this.getQuery()._id; // 삭제하려는 그룹의 ID를 가져옴
+
+        // 게시글 삭제 (해당 그룹내에 있는 모든 게시글 삭제)
+        await Post.deleteMany({ groupId });
+
+        next(); // 다음 미들웨어로 넘어가기
+    } catch(error) {
+        next(error); // 에러 발생 시 처리
+    }    
+});
 
 const Group = mongoose.model('Group', groupSchema);
 
