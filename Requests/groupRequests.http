@@ -11,8 +11,8 @@ Content-Type: application/json
 {
     "name": "example5",
     "password": "123456",
-    "imageUrl": "http://localhost:3000/uploads/tes1.png",
-    "isPublic": false,
+    "imageUrl": "http://localhost:3000/api/uploads/tes1.png",
+    "isPublic": true,
     "introduction": "example api.",
     "badges": []
 }
@@ -48,7 +48,7 @@ Content-Type: application/json
 ###
 
 //그룹 상세 조회 API
-POST http://localhost:3000/api/groups/66f9723bbdb98b96d087d2c6
+POST http://localhost:3000/api/groups/66ff845840e2a6e338e82698
 Content-Type: application/json
 
 {

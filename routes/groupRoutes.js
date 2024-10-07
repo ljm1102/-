@@ -116,7 +116,7 @@ router.get('/', asyncHandler(async (req, res) => {
 }));
 
 // 그룹 상세 조회 API
-router.post('/:id', asyncHandler(async (req, res) => {
+router.get('/:id', asyncHandler(async (req, res) => {
     const groupId = req.params.id;
     const { password } = req.body; // 비밀번호를 요청 본문에서 받음
 
@@ -125,7 +125,7 @@ router.post('/:id', asyncHandler(async (req, res) => {
     if (!group) {
         return res.status(404).send({ message: '존재하지 않는 그룹입니다' });
     }
-
+    /*
     if (!group.isPublic) {
         // 비공개 그룹일 경우 비밀번호 확인
         const isMatch = await bcrypt.compare(password, group.password);
@@ -133,7 +133,7 @@ router.post('/:id', asyncHandler(async (req, res) => {
             return res.status(403).send({ message: '비밀번호가 일치하지 않습니다' });
         }
     }
-
+    */
     // 게시글 수 추가
     const postCount = await Post.countDocuments({ groupId: group._id });
     group.postCount = postCount; // 게시글 수 추가
